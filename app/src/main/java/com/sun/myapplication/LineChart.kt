@@ -113,7 +113,6 @@ internal class LineChart : LinearLayout {
     fun setXAxis(xAxis: MutableList<String>) {
         xText.clear()
         xText.addAll(xAxis)
-        gesturePos = xText.size - 1
         invalidate()
     }
 
@@ -192,7 +191,6 @@ internal class LineChart : LinearLayout {
         super.onLayout(changed, l, t, r, b)
         yItemHeight = (height - yOffsetEnd - yOffsetStart) / (yText.size)
         xItemWidth = (width - xEndOffset - xStartOffset) / (xText.size - 1)
-        oldGestureX = width - xEndOffset;
         if (yAxisData.isNotEmpty()) {
             dataY.clear()
             yAxisData.forEach {
@@ -201,6 +199,9 @@ internal class LineChart : LinearLayout {
         }
         gesturePaint.color = Color.parseColor("#80${subjectColor}")
         dataPaint.color = Color.parseColor("#${subjectColor}")
+        gesturePos = dataY.size - 1
+        oldGestureX =xStartOffset+gesturePos*xItemWidth;
+
     }
 
     constructor(
